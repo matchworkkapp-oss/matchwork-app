@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { Suspense, useState } from 'react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import Logo from '@/components/Logo'
@@ -50,7 +50,7 @@ const EyeOn = () => (
   </svg>
 )
 
-export default function RegistroPage() {
+function RegistroContent() {
   const params = useSearchParams()
   const supabase = createClient()
 
@@ -525,4 +525,12 @@ export default function RegistroPage() {
       </div>
     )
   }
+}
+
+export default function RegistroPage() {
+  return (
+    <Suspense fallback={null}>
+      <RegistroContent />
+    </Suspense>
+  )
 }

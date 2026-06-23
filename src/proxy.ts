@@ -25,16 +25,13 @@ export async function middleware(request: NextRequest) {
 
   const { pathname } = request.nextUrl
 
-  // Rutas públicas (no requieren login)
   const publicRoutes = ['/', '/login', '/registro', '/auth/callback']
   const isPublic = publicRoutes.some(r => pathname === r || pathname.startsWith('/auth/'))
 
-  // Si no está logueado y quiere acceder a una ruta protegida → login
   if (!user && !isPublic) {
     return NextResponse.redirect(new URL('/login', request.url))
   }
 
-  // Si ya está logueado y va a login/registro → feed
   if (user && (pathname === '/login' || pathname === '/registro')) {
     return NextResponse.redirect(new URL('/feed', request.url))
   }
